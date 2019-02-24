@@ -73,12 +73,14 @@ class FastFoodOrder {
     
 }
 
+const setMenuItemAndExecuteMenuOrder = Symbol('setMenuItemAndExecuteMenuOrder');
+
 class Patron{
     constructor(){
         this.order = new FastFoodOrder();
     }
 
-    SetMenuItemAndExecuteMenuOrder(item)
+    [setMenuItemAndExecuteMenuOrder](item)
     {
         this.menuItem = item;
         this.order.ExecuteCommand(this.orderCommand, this.menuItem);
@@ -86,17 +88,17 @@ class Patron{
 
     AddOneMenuItemToOrder(menuItem){
         this.orderCommand = new CommandFactory().CreateAddCommand();
-        this.SetMenuItemAndExecuteMenuOrder(menuItem);
+        this[setMenuItemAndExecuteMenuOrder](menuItem);
     }
 
     RemoveOneMenuItemFromOrder(menuItem){
         this.orderCommand = new CommandFactory().CreateRemoveCommand();
-        this.SetMenuItemAndExecuteMenuOrder(menuItem);
+        this[setMenuItemAndExecuteMenuOrder](menuItem);
     }
 
     ModifyOneMenuItemInOrder(menuItem){
         this.orderCommand = new CommandFactory().CreateModifyCommand();
-        this.SetMenuItemAndExecuteMenuOrder(menuItem);
+        this[setMenuItemAndExecuteMenuOrder](menuItem);
     }
 
     ShowCurrentOrder(){
@@ -117,4 +119,3 @@ patron.ShowCurrentOrder();
 
 patron.ModifyOneMenuItemInOrder(new MenuItem("Hambuger", 4, 2.59));
 patron.ShowCurrentOrder();
-
